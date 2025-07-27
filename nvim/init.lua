@@ -1,0 +1,6 @@
+require("plugins")
+require("config")
+require("shortcuts")
+require("treesitter")
+require("lsp")
+require("mini.surround").setup()
