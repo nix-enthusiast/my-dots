@@ -1,0 +1,115 @@
+#--------BASH/ZSH--------#
+alias ls='ls --color=auto'
+alias grep="grep --color"
+
+alias bash-h="cat ~/.bash_history"
+alias zsh-h="cat ~/.zsh_history"
+
+alias lenny="echo '( ͡° ͜ʖ ͡°)' | pbcopy"
+alias shrug="echo '¯\_(ツ)_/¯' | pbcopy" 
+
+alias ':q'="exit"
+alias dc="exit"
+
+alias cls="printf '\e[2J\e[3J\e[H'"
+alias s="sudo"
+
+os="$(command -v lsb_release && lsb_release -si || python -c 'from platform import system ; print(system())')"
+
+#--------AUTOSTART--------#
+case $os in
+	"Fedora")
+	;;
+
+	*)
+	pfetch
+esac
+
+#--------INTERNET GOODIES--------#
+alias dennis="curl -sL git.io/unix && echo"
+
+#--------PACKAGE MANAGER--------#
+case $os in
+	"Arch" | "Artix")
+	alias sync="sudo pacman -Syyu --noconfirm && cpcache"
+	alias sync-aur="yay -Syyu --aur --noconfirm"
+	alias autoremove="pacman -Qdtq | sudo pacman -Rs --noconfirm - 2> /dev/null || echo '[nope]'"
+	alias cpcache="sudo pacman -Sc --noconfirm"
+	alias sync-all="sync && sync-aur && autoremove && cpcache"
+	alias conf-java="archlinux-java"
+	;;
+
+	"Debian" | "Ubuntu")
+	alias autoremove="sudo apt autoremove -y"
+	alias cpcache="sudo apt autoclean"
+	alias rebreq="if test -f '/var/run/reboot-required'; then true; else false;fi"
+	alias sync="sudo apt update && sudo apt upgrade -y && autoremove && cpcache"
+	alias conf-java="sudo update-alternatives --config java"
+	;;
+	
+	"Fedora")
+	alias autoremove="sudo dnf autoremove -y"
+	alias cpcache="sudo dnf clean expire-cache -y"
+	alias sync="sudo dnf update -y && autoremove && cpcache"
+	;;
+
+	"Darwin")
+	alias bi="brew install"
+	alias bic="brew install --cask"
+	alias bu="brew uninstall"
+	alias bs="brew search"
+	alias br="brew reinstall"
+	alias brnq="brew reinstall --no-quarantine"
+	alias bif="brew info"
+	alias autoremove="brew autoremove"
+	alias cpcache="brew cleanup"
+	alias sync="brew update && brew upgrade --greedy && autoremove && cpcache"
+	;;
+
+	*)
+	echo "Package manager aliases for this OS is not avaliable!"
+esac
+
+#--------CLEANING--------#
+alias clnvc="rm -rf ~/.local/share/nvim/swap/* 2>&1 /dev/null"
+
+#--------PROCESS--------#
+alias update-bash="source ~/.bashrc"
+alias update-zsh="source ~/.zshrc"
+
+#--------PROGRAMS SHORTER--------#
+nc-send() {nc -n "$1" 1234 < "$2"; }
+alias azsh="arch -x86_64 zsh"
+alias nc-get="nc -vl 1234 >"
+alias venv="source $HOME/.local/libs/venv/bin/activate"
+alias update-sudo="echo 'auth       sufficient     pam_tid.so' | pbcopy ; sudo $EDITOR /etc/pam.d/sudo"
+alias p="python"
+alias cr="cargo run"
+alias cb="cargo build"
+alias cbr="cargo build --release"
+alias ct="cargo test"
+alias zb="zig build"
+alias zbr="zig build run"
+alias zbt="zig build test"
+alias zbtf="zig build test --fuzz"
+
+alias ldd="otool -L"
+alias fpa="ffplay -nodisp"
+alias midiplay="fluidsynth ~/.local/usr/share/soundfonts/GeneralUser-GS.sf2"
+
+alias ytdl-music="yt-dlp -f 'bestaudio' --embed-thumbnail --add-metadata"
+alias ytdl-video="yt-dlp -f 'bestvideo+bestaudio/best' $1 --embed-thumbnail --add-metadata" || echo "If the video is age restricted you can use '--cookies=</path/of/cookie.txt>' flag. To get the cookies you can use 'Get Cookies' extension."
+
+#--------FETCH PROGRAMS--------#
+alias pf="pfetch"
+
+#--------CONFIG--------#
+alias viprofile="$EDITOR ~/.export"
+alias vialias="$EDITOR ~/.alias"
+alias vibash="$EDITOR ~/.bashrc"
+alias vizsh="$EDITOR ~/.zshrc"
+
+alias nvimrc="$EDITOR ~/.config/nvim/lua/"
+
+
+# vim:ft=bash
